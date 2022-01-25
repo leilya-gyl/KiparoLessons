@@ -2,16 +2,18 @@ package com.example.kiparolessons.cleancodetest.presentation
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kiparolessons.cleancodetest.presentation.viewmodel.MainViewModel
 import com.example.kiparolessons.databinding.ActivityMainBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
-    //private lateinit var vm: MainViewModel
-    private val vm: MainViewModel by viewModel<MainViewModel>()
+    private val vm: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
