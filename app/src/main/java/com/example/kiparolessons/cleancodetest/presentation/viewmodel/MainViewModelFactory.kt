@@ -7,8 +7,9 @@ import com.example.kiparolessons.cleancodetest.data.repository.UserRepositoryImp
 import com.example.kiparolessons.cleancodetest.data.storage.sharedprefs.SharedPrefUserStorage
 import com.example.kiparolessons.cleancodetest.domain.usecase.GetUserNameUseCase
 import com.example.kiparolessons.cleancodetest.domain.usecase.SaveUserNameUseCase
+import javax.inject.Inject
 
-class MainViewModelFactory(
+class MainViewModelFactory @Inject constructor(
     val getUserNameUseCase: GetUserNameUseCase,
     val saveUserNameUseCase: SaveUserNameUseCase
 ): ViewModelProvider.Factory {
