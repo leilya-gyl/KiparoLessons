@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -45,11 +46,16 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     // Koin for Kotlin apps
-    def koin_version = "3.1.2"
+    /*def koin_version = "3.1.2"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
     // Testing
-    testImplementation " io.insert-koin:koin-test:$koin_version"
+    testImplementation " io.insert-koin:koin-test:$koin_version"*/
+
+    // Dagger
+    implementation 'com.google.dagger:dagger:2.40.1'
+    kapt 'com.google.dagger:dagger-compiler:2.40.1'
+    implementation 'javax.inject:javax.inject:1'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

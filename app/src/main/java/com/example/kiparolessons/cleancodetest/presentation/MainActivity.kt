@@ -3,15 +3,20 @@ package com.example.kiparolessons.cleancodetest.presentation
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.kiparolessons.cleancodetest.app.App
 import com.example.kiparolessons.cleancodetest.presentation.viewmodel.MainViewModel
+import com.example.kiparolessons.cleancodetest.presentation.viewmodel.MainViewModelFactory
 import com.example.kiparolessons.databinding.ActivityMainBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var vmFactory: MainViewModelFactory
+
     private lateinit var mainBinding: ActivityMainBinding
-    //private lateinit var vm: MainViewModel
-    private val vm: MainViewModel by viewModel<MainViewModel>()
+    private lateinit var vm: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,10 +24,12 @@ class MainActivity : AppCompatActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
 
+        (applicationContext as App).appComponent.inject(this)
+
         Log.e("AAA", "Activity created")
 
-        //vm = ViewModelProvider(this, MainViewModelFactory(this))
-        //    .get(MainViewModel::class.java)
+        vm = ViewModelProvider(this, vmFactory)
+            .get(MainViewModel::class.java)
 
         vm.resultLive.observe(this, { text ->
             mainBinding.dataTextView.text = text

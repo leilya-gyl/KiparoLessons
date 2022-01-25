@@ -1,17 +1,23 @@
 package com.example.kiparolessons.cleancodetest.di
 
+import android.content.Context
 import com.example.kiparolessons.cleancodetest.data.repository.UserRepositoryImpl
 import com.example.kiparolessons.cleancodetest.data.storage.UserStorage
 import com.example.kiparolessons.cleancodetest.data.storage.sharedprefs.SharedPrefUserStorage
 import com.example.kiparolessons.cleancodetest.domain.repository.UserRepository
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
 
-val dataModule = module {
-    single<UserStorage> {
-        SharedPrefUserStorage(context = get())
+@Module
+class DataModule {
+
+    @Provides
+    fun provideUserStorage(context: Context): UserStorage {
+        return SharedPrefUserStorage(context = context)
     }
 
-    single<UserRepository> {
-        UserRepositoryImpl(userStorage = get())
+    @Provides
+    fun provideUserRepository(userStorage: UserStorage) : UserRepository {
+        return UserRepositoryImpl(userStorage = userStorage)
     }
 }

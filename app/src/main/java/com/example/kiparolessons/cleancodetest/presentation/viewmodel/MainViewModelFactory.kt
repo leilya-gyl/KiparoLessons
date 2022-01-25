@@ -8,14 +8,18 @@ import com.example.kiparolessons.cleancodetest.data.storage.sharedprefs.SharedPr
 import com.example.kiparolessons.cleancodetest.domain.usecase.GetUserNameUseCase
 import com.example.kiparolessons.cleancodetest.domain.usecase.SaveUserNameUseCase
 
-class MainViewModelFactory(context: Context): ViewModelProvider.Factory {
+class MainViewModelFactory(
+    val getUserNameUseCase: GetUserNameUseCase,
+    val saveUserNameUseCase: SaveUserNameUseCase
+): ViewModelProvider.Factory {
 
     ///(LazyThreadSafetyMode.NONE) - пишем для того, чтобы указать что нам не нужна многопоточнось
     // по умолчанию 'by lazy' синхронизирован
-
+/*
     private val userRepository by lazy(LazyThreadSafetyMode.NONE) {
         UserRepositoryImpl(userStorage = SharedPrefUserStorage(context = context))
     }
+
     private val getUserNameUseCase by lazy(LazyThreadSafetyMode.NONE) {
         GetUserNameUseCase(
             userRepository = userRepository
@@ -26,6 +30,8 @@ class MainViewModelFactory(context: Context): ViewModelProvider.Factory {
             userRepository = userRepository
         )
     }
+
+ */
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MainViewModel(

@@ -1,22 +1,21 @@
 package com.example.kiparolessons.cleancodetest.app
 
 import android.app.Application
-import com.example.kiparolessons.cleancodetest.di.appModule
-import com.example.kiparolessons.cleancodetest.di.dataModule
-import com.example.kiparolessons.cleancodetest.di.domainModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
+import com.example.kiparolessons.cleancodetest.di.AppComponent
+import com.example.kiparolessons.cleancodetest.di.AppModule
+import com.example.kiparolessons.cleancodetest.di.DaggerAppComponent
+import dagger.Component
 
 class App : Application() {
+
+    lateinit var appComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
 
-        startKoin {
-            androidLogger(Level.DEBUG)
-            androidContext(this@App)
-            modules(listOf(appModule, domainModule, dataModule))
-        }
+        appComponent = DaggerAppComponent
+            .builder()
+            .appModule(AppModule(context = this))
+            .build()
     }
 }
