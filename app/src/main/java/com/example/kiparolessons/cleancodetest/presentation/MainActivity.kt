@@ -28,21 +28,21 @@ class MainActivity : AppCompatActivity() {
 
         Log.e("AAA", "Activity created")
 
-        vm = ViewModelProvider(this, vmFactory)
-            .get(MainViewModel::class.java)
+        vm = ViewModelProvider(this, vmFactory)[MainViewModel::class.java]
 
-        vm.resultLive.observe(this, { text ->
-            mainBinding.dataTextView.text = text
-        })
+        vm.stateLive.observe(this) { event ->
+            val strText = "${event.saveResult} ${event.firstName} ${event.lastName}"
+            mainBinding.dataTextView.text = strText
+        }
 
         mainBinding.run {
             receiveButton.setOnClickListener {
-                vm.load()
+                vm.send(LoadEvent())
             }
 
             saveButton.setOnClickListener {
                 val text = dataEditText.text.toString()
-                vm.save(text)
+                vm.send(SaveEvent(text = text))
             }
         }
     }
